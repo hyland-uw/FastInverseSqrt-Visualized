@@ -15,7 +15,7 @@ compute_result_block <- function(slices = 100000, GRID_SIZE = 50) {
   results$A_rank <- ntile(results$A, GRID_SIZE)
   results$B_rank <- ntile(results$B, GRID_SIZE)
   results$err_rank <- ntile(results$error, GRID_SIZE)
-  results$pair <- paste0("(", results$A_rank, ", ", results$B_rank, ")")
+  results$pair <- paste0("(", round(results$A, 4), ", ", round(results$B, 4), ")")
   return(results)
 }
 

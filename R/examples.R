@@ -3,7 +3,8 @@ source("utils.R")
 FLOAT_TOL <- 0.0004882812
 SLICES <- 16384
 
-float_vector <- boundedStratifiedSample(SLICES, 0.25, 2)
+# frsr_sample gives us log stratified samples
+float_vector <- frsr_sample(n = SLICES)$input
 
 Blinn <- bind_cols(frsr(x = float_vector, NRmax = 10,
                      tol = FLOAT_TOL, magic = 0x5F400000,
@@ -87,7 +88,7 @@ approximated %>%
        fill = "Approximation\nmethod")
 
 
-### combines a more robust arrow system with the 
+### combines a more robust arrow system with the
 ### normal NR plot above
 nrplot <- function(df = approximated, approx = "QuakeIII") {
   # First create the desired regularly spaced x values
@@ -96,15 +97,15 @@ nrplot <- function(df = approximated, approx = "QuakeIII") {
     filter(method %in% approx)
   # Then find the closest actual input values in the dataset
   segment_data <- temp %>%
-    mutate(closest_target = target_xs[sapply(input, function(x) 
+    mutate(closest_target = target_xs[sapply(input, function(x)
       which.min(abs(target_xs - x)))]) %>%
     group_by(closest_target) %>%
     slice_min(abs(input - closest_target), n = 1) %>%
     ungroup()
   temp %>%
     mutate(relErrGuess = (initial - reference) / reference,
-           relErrNR = (after_one - reference) / reference) %>% 
-    ggplot(aes(x = input)) + 
+           relErrNR = (after_one - reference) / reference) %>%
+    ggplot(aes(x = input)) +
     geom_ribbon(aes(ymin = pmin(relErrGuess, relErrNR),
                     ymax = pmax(relErrGuess, relErrNR),
                     fill = method),
@@ -116,18 +117,17 @@ nrplot <- function(df = approximated, approx = "QuakeIII") {
                   linetype = "After one iteration")) +
     scale_linetype_manual(name = "Newton-Raphson",
                           breaks = c("Initial guess", "After one iteration"),
-                          values = c("Initial guess" = "solid", 
+                          values = c("Initial guess" = "solid",
                                      "After one iteration" = "dotted")) +
     guides(fill = "none") +
     geom_segment(data = segment_data,
-                 aes(x = input, 
+                 aes(x = input,
                      xend = input,
-                     y = (initial - reference) / reference, 
+                     y = (initial - reference) / reference,
                      yend = (after_one - reference) / reference),
                  linewidth = 0.5,
                  arrow = arrow(length = unit(0.2, "cm"), type = "closed"),
                  show.legend = FALSE) +
-    xlim(0.25, 2) + 
     labs(y = "Relative error",
          title = "One iteration of Newton-Raphson markedly reduces error",
          x = "Input") -> output
