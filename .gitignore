@@ -5,3 +5,4 @@ src/fisr
 fisrvenv/*
 bin/*
 .vscode/*
+.Rproj.user
