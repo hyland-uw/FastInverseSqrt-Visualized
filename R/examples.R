@@ -4,7 +4,7 @@ FLOAT_TOL <- 0.0004882812
 SLICES <- 16384
 
 # frsr_sample gives us log stratified samples
-float_vector <- frsr_sample(n = SLICES)$input
+float_vector <- frsr_sample(n = SLICES * 2, x_min = 0.5, x_max = 2.0)$input
 
 Blinn <- bind_cols(frsr(x = float_vector, NRmax = 10,
                      tol = FLOAT_TOL, magic = 0x5F400000,
@@ -13,7 +13,7 @@ Blinn <- bind_cols(frsr(x = float_vector, NRmax = 10,
                    method = "Blinn")
 
 QuakeIII <- bind_cols(frsr(x = float_vector, NRmax = 10,
-                        tol = FLOAT_TOL, magic = 0x5F375A86,
+                        tol = FLOAT_TOL, magic = 0x5F3759DF,
                         detail = TRUE, keep_params = TRUE),
                       method = "QuakeIII")
 

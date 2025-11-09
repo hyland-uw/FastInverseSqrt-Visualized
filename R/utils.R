@@ -2,6 +2,9 @@
 
 # Load required packages
 library(tibble)
+library(data.table)
+library(Matrix)
+library(Rglpk)
 library(tidyr)
 library(dplyr)
 library(ggplot2)
@@ -43,10 +46,10 @@ logStratifiedSampler <- function(min, max, n) {
 # Slicing Function
 create_slices <- function(df, N, min_input = 0.5, max_input = 2.0) {
   slice_width <- (max_input - min_input) / N
-  
+
   df %>%
     filter(input >= min_input, input < max_input) %>%
-    mutate(slice = cut(input, 
+    mutate(slice = cut(input,
                        breaks = seq(min_input, max_input, by = slice_width),
                        labels = FALSE,
                        include.lowest = TRUE))
@@ -55,14 +58,14 @@ create_slices <- function(df, N, min_input = 0.5, max_input = 2.0) {
 # Optimization Function
 find_optimal_magic <- function(slice_data) {
   unique_magics <- unique(slice_data$magic)
-  
+
   results <- sapply(unique_magics, function(m) {
     slice_data %>%
       filter(magic == m) %>%
       summarise(max_error = max(error)) %>%
       pull(max_error)
   })
-  
+
   optimal_index <- which.min(results)
   list(minimum = unique_magics[optimal_index], objective = results[optimal_index])
 }
@@ -74,10 +77,10 @@ mc_annotate <- function(magic_value, label,
   list(
     annotate("segment",
              x = x_start, xend = x_end,
-             y = magic_value, yend = magic_value, 
+             y = magic_value, yend = magic_value,
              color = color, linetype = 2, linewidth = 1.5),
     annotate("point", x = x_end, y = magic_value, color = color, size = 3),
-    annotate("text", x = x_end + 0.002, y = magic_value, label = label, 
+    annotate("text", x = x_end + 0.002, y = magic_value, label = label,
              hjust = -0.05, vjust = 0.5, color = color, size = text_size)
   )
 }
