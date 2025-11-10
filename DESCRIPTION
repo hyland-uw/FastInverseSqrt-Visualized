@@ -1,0 +1,34 @@
+Package: visualfrsr
+Title: Visual Toolkit for Fast Reciprocal Square Root Experiments
+Version: 0.0.0.9000
+Authors@R: person(given = "Adam",
+                  family = "Hyland",
+                  role = c("aut", "cre"),
+                  email = "0x5f37642f@protonmail.com")
+Description: Provides data pipelines, sampling utilities, and plotting helpers
+    for investigating Fast Reciprocal Square Root (FRSR) approximations. The
+    package wraps the exploratory scripts from the FastInverseSqrt-Visualized
+    project into structured modules that expose reproducible datasets and
+    ggplot2-based visualizations.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: R (>= 4.1.0)
+Imports:
+    data.table,
+    Matrix,
+    Rglpk,
+    dplyr,
+    ggplot2,
+    tibble,
+    tidyr,
+    scales,
+    purrr,
+    frsrr,
+    viridis,
+    rlang
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
