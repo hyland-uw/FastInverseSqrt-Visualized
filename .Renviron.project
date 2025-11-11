@@ -1,0 +1,5 @@
+OMP_NUM_THREADS=1
+OPENBLAS_NUM_THREADS=1
+MKL_NUM_THREADS=1
+# Ensure libomp is found the same way everywhere
+DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/opt/llvm/lib:/Library/Frameworks/R.framework/Resources/lib

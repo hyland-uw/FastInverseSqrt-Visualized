@@ -1,0 +1,16 @@
+# Homebrew LLVM + OpenMP (Apple silicon)
+LLVM=/opt/homebrew/opt/llvm
+CC=$(LLVM)/bin/clang
+CXX=$(LLVM)/bin/clang++
+CXX11=$(LLVM)/bin/clang++
+CXX14=$(LLVM)/bin/clang++
+CXX17=$(LLVM)/bin/clang++
+FC=/opt/homebrew/opt/gcc/bin/gfortran
+
+CPPFLAGS += -I$(LLVM)/include
+CFLAGS   += -fPIC
+CXXFLAGS += -fPIC -O3
+
+# OpenMP with clang on macOS
+PKG_CXXFLAGS += -Xpreprocessor -fopenmp
+PKG_LIBS     += -L$(LLVM)/lib -Wl,-rpath,$(LLVM)/lib -lomp

@@ -12,13 +12,12 @@ As a note, I use the term "inverse" to mean multiplicative inverse to match the 
 
 ## Mode of operation
 
-This repository is now organized as the `visualfrsr` R package (named `visual-frsr`
-throughout the docs; R package IDs cannot contain hyphens). Install the
+This repository is now organized as the `visualfrsr` R package . Install the
 dependencies listed in `DESCRIPTION`, then use `devtools::load_all()` (or
 `R CMD INSTALL`) to expose the functions documented below. Each module can be
 called independently, and heavy pipelines are tucked behind explicit function
 calls so you only run the expensive steps you need. The package depends on
-[frsrr](https://github.com/Protonk/frsr) for the core samplers, so your system
+[frsrr](https://github.com/Protonk/frsrr) for the core samplers, so your system
 must have C++20 support to build it.
 
 This project is partially a function of needing to have easy access to the bits in memory of a floating point number, wanting to visualize things easily, and not wanting to use Python. However, it also allows you experiment in two places, "close to the metal" generating data and more abstractly with the data structures you end up with. Data pipelines (binned, clustered, optimized, etc.) now live in their own files under `R/`, while every ggplot builder sits in `R/plotting.R`, making it explicit where to look when you only need visuals versus reproducible datasets.

@@ -17,8 +17,7 @@
   "darkorange4", "brown"
 )
 
-# Legacy `%>%` pipelines were replaced with base pipes (`|>`) so future refactors
-# remember why no magrittr operator remains.
+# Legacy `%>%` pipelines were replaced with base pipes (`|>`)
 
 #' Log-stratified sampler for floats.
 #' 
